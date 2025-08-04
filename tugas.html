@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Program Penjualan</title>
+    <script type="text/javascript">
+      alert("selamat datang, silahkan isi form di bawah ini.");
+      function calculateTotal() {
+        var bayar = parseInt(document.getElementById("bayar").value);
+        var harga = parseInt(document.getElementById("harga").value);
+        var pembayaran = document.getElementById("cara_pembayaran").value;
+        var aksesorisElements = document.getElementsByName("aksesoris");
+        var total = harga;
+
+        for (var i = 0; i < aksesorisElements.length; i++) {
+          if (aksesorisElements[i].checked) {
+            var aksesoris = aksesorisElements[i].value;
+            if (aksesoris === "helm") {
+              total += 250000;
+            } else if (aksesoris === "jaket") {
+              total += 150000;
+            } else if (aksesoris === "velg") {
+              total += 450000;
+            }
+          }
+        }
+
+        var bunga = 0;
+        var diskon = 0;
+
+        if (pembayaran === "kredit") {
+          bunga = 0.15 * total;
+          total += bunga;
+        } else if (pembayaran === "tunai") {
+          diskon = 0.1 * total;
+          total -= diskon;
+        }
+
+        document.getElementById("bayar").value =
+          "Rp " + total.toLocaleString("id-ID");
+        document.getElementById("total").value =
+          "Rp " + total.toLocaleString("id-ID");
+        document.getElementById("bunga").value =
+          "Rp " + bunga.toLocaleString("id-ID");
+        document.getElementById("diskon").value =
+          "Rp " + diskon.toLocaleString("id-ID");
+      }
+
+      function reset() {
+        var yakin = confirm("Apakah anda yakin?");
+
+        if (yakin) {
+          window.location = "http://127.0.0.1:5501/tugas.html";
+        } else {
+          window.location = "http://127.0.0.1:5501/tugas.html";
+        }
+        var checkboxes = document.getElementsByName("aksesoris");
+        for (var i = 0; i < checkboxes.length; i++) {
+          checkboxes[i].checked = false;
+          document.getElementById("velg").value = "";
+          document.getElementById("helm").value = "";
+          document.getElementById("jaket").value = "";
+        }
+      }
+
+      var aksesoris = document.getElementsByName("aksesoris");
+      for (var i = 0; i < aksesoris.length; i++) {
+        aksesoris[i].checked = false;
+      }
+    </script>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        justify-content: center;
+        background-color: #000;
+        padding: 20px;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+      }
+
+      h1 {
+        font-size: 22px;
+        size: 10px;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      table {
+        background-color: #15172b;
+        border-radius: 20px;
+        box-sizing: border-box;
+        height: 500px;
+        padding: 20px;
+        width: 400px;
+      }
+
+      table td {
+        padding: 8px;
+        width: fit-content;
+        color: white;
+        font-size: 14px;
+      }
+
+      label {
+        font-weight: bold;
+        color: whitesmoke;
+        font-size: 14px;
+      }
+
+      #aksesoris {
+        color: #eee;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      input[type="number"],
+      select {
+        width: 180px;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        box-sizing: border-box;
+        font-size: 14px;
+        color: #333;
+        margin-top: 5px;
+      }
+
+      input[type="text"] {
+        width: 180px;
+        padding: 8px;
+        border: none;
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        box-sizing: border-box;
+        font-size: 14px;
+        color: #333;
+        pointer-events: none;
+      }
+
+      button {
+        background-color: #08d;
+        border-radius: 8px;
+        border: 0;
+        box-sizing: border-box;
+        color: #eee;
+        cursor: pointer;
+        width: 70px;
+        height: 30px;
+        text-align: center;
+        font-size: 15px;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <table width="25%" border="0">
+      <h1>FORM PENJUALAN SEPEDA MOTOR</h1>
+      <tr>
+        <td width="35%">
+          <label for="merk_motor">Merk Motor</label>
+        </td>
+        <td width="2%">:</td>
+        <td width="0%">
+          <select id="merk_motor">
+            <option>Honda</option>
+            <option>Yamaha</option>
+            <option>Suzuki</option>
+            <option>Kawasaki</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td width="20%">
+          <label for="harga">Harga</label>
+        </td>
+        <td width="2%">:</td>
+        <td width="0">
+          <input type="number" id="harga" />
+        </td>
+      </tr>
+
+      <tr>
+        <td width="20%">
+          <label for="cara_pembayaran">Cara Pembayaran</label>
+        </td>
+        <td width="2%">:</td>
+        <td width="0">
+          <select id="cara_pembayaran">
+            <option value="tunai">Tunai</option>
+            <option value="kredit">Kredit</option>
+          </select>
+        </td>
+      </tr>
+
+      <tr>
+        <td valign="top"><label for="aksesoris">Aksesoris</label></td>
+        <td valign="top" width="2%">:</td>
+        <td id="aksesoris">
+          <input type="checkbox" name="aksesoris" value="velg" />velg custom
+          (450k) <br />
+          <input type="checkbox" name="aksesoris" value="helm" />Helm (250k)
+          <br />
+          <input type="checkbox" name="aksesoris" value="jaket" />Jaket (150k)
+          <br />
+        </td>
+      </tr>
+
+      <tr>
+        <td width="20%">
+          <label for="total">Total</label>
+        </td>
+        <td width="2%">:</td>
+        <td width="0">
+          <input type="text" id="total" readonly />
+        </td>
+      </tr>
+
+      <tr>
+        <td width="20%">
+          <label for="bunga">Bunga (15%)</label>
+        </td>
+        <td width="2%">:</td>
+        <td width="0">
+          <input type="text" id="bunga" readonly />
+        </td>
+      </tr>
+
+      <tr>
+        <td width="20%">
+          <label for="diskon">Diskon (10%)</label>
+        </td>
+        <td width="2%">:</td>
+        <td width="0">
+          <input type="text" id="diskon" readonly />
+        </td>
+      </tr>
+
+      <tr>
+        <td width="20%">
+          <label for="bayar">Bayar</label>
+        </td>
+        <td width="2%">:</td>
+        <td width="0">
+          <input type="text" id="bayar" readonly />
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td></td>
+        <td>
+          <button type="button" onclick="calculateTotal()">Hitung</button>
+          <button type="reset" onclick="reset()">Reset</button>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
